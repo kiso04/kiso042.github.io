@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta de Amor ❤️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffebee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .carta {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* Prevent hearts from overflowing */
+        }
+        h1 {
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+        button:hover {
+            background-color: #c2185b;
+        }
+        #contenedor-corazones {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .carta {
+            z-index: 2;
+        }
+        .corazon {
+            font-size: 30px;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease; /* Smooth fade out */
+        }
+    
+        @keyframes volar {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(
+                    calc(var(--mov-x) * 100px),
+                    calc(var(--mov-y) * -150px)
+                ) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="contenedor-corazones"></div>
+    <div class="carta">
+        <h1>Para mi amor ❤️</h1>
+        <p id="mensaje">Hoy quiero decirte 50 cosas bonitas que pienso de ti. </p>
+        <button id="btnAmor">Haz clic para más amor</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnAmor = document.getElementById('btnAmor');
+            const mensaje = document.getElementById('mensaje');
+            const carta = document.querySelector('.carta');
+            
+            const mensajesAmor = [
+                "1. Me encanta tu sonrisa, ilumina hasta mis días grises.",
+                "2. Eres la persona más interesante que he conocido.",
+                "3. Admiro tu fuerza, tanto física como emocional.",
+                "4. Tienes un corazón tan noble que inspira a los demás.",
+                "5. Me haces reír como nadie más lo hace.",
+                "6. Tu voz es mi sonido favorito.",
+                "7. Me encanta cómo me miras, me hace sentir única.",
+                "8. Tu abrazo es mi lugar seguro.",
+                "9. Hueles increíble, siempre me atraes.",
+                "10. Me encanta caminar a tu lado, literal y figurativamente.",
+                "11. Eres mi paz en medio del caos.",
+                "12. Contigo, todo es más fácil.",
+                "13. Me haces querer ser mejor persona.",
+                "14. Nadie me comprende como tú.",
+                "15. Eres mi pensamiento favorito del día.",
+                "16. Me encanta cómo me cuidas sin que te lo pida.",
+                "17. Nadie me hace sentir tan amada como tú.",
+                "18. Tus pequeños gestos significan el mundo para mí.",
+                "19. Tu forma de ser me hipnotiza... no necesito magia, me basta con verte.",
+                "20. Me encanta cómo me besas, como si fuera la primera vez.",
+                "21. Me fascina cómo resuelves los problemas con creatividad.",
+                "22. Tienes una mente brillante, y eso me atrae mucho.",
+                "23. Eres increíble en lo que haces, y lo sabes.",
+                "24. Aprendo algo nuevo cada vez que hablamos.",
+                "25. Tu pasión por lo que te gusta es inspiradora.",
+                "26. Eres mi persona favorita en el mundo.",
+                "27. Tu mirada debería ser ilegal... me deja sin aliento.",
+                "28. Eres raro en la mejor forma posible... y por eso te amo.",
+                "29. Contigo quiero envejecer.",
+                "30. Eres mi hogar.",
+                "31. Me encanta tu lado protector sin ser sobreprotector.",
+                "32. Tienes una energía masculina que me vuelve loca.",
+                "33. Eres fuerte, pero también sensible, y eso te hace perfecto.",
+                "34. Me encanta cómo lideras sin imponer.",
+                "35. Eres el hombre más atractivo que he conocido, por dentro y por fuera.",
+                "36. No me gustan los vicios, pero me gustas tú",
+                "37. Cada día a tu lado es un regalo.",
+                "38. Quiero que seas el padre de mis hijos.",
+                "39. Siempre te elegiré, una y otra vez.",
+                "40. El tiempo contigo vuela, porque eres mi felicidad.",
+                "41. Nadie me hace sentir lo que tú.",
+                "42. Tu piel es mi adicción.",
+                "43. Me pierdo en tus ojos y no quiero encontrarme.",
+                "44. Eres el tipo de hombre del que las canciones románticas hablan.",
+                "45. Me encanta cómo me haces sentir deseada.",
+                "46. A tu lado, hasta lo ordinario se vuelve extraordinario.",
+                "47. Sé que lograrás todo lo que te propongas.",
+                "48. Eres capaz de cosas increíbles, yo lo sé.",
+                "49. No hay obstáculo que no puedas superar.",
+                "50. Estoy orgullosa de ti, siempre."
+            ];
+
+            let contador = 0;
+
+            btnAmor.addEventListener('click', function() {
+                // Cambiar mensaje
+                mensaje.textContent = (contador < mensajesAmor.length) ? mensajesAmor[contador++] : "¡Sigue haciendo clic para más mensajes!";
+                if (contador >= mensajesAmor.length) contador = 0;
+
+                // Crear múltiples corazones (¡explosión de amor!)
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(crearCorazon, i * 100); // Retraso entre corazones para un efecto escalonado
+                }
+            });
+
+            function crearCorazon() {
+                const corazon = document.createElement('div');
+                corazon.innerHTML = '❤️';
+                corazon.className = 'corazon';
+                
+                // Posición aleatoria dentro de la carta
+                corazon.style.left = `${Math.random() * 80 + 10}%`;
+                corazon.style.top = `${Math.random() * 80 + 10}%`;
+                
+                // Tamaño aleatorio
+                const tamaño = Math.random() * 20 + 10;
+                corazon.style.fontSize = `${tamaño}px`;
+                
+                // Animación única para cada corazón
+                const duracion = Math.random() * 3 + 2; // Entre 2 y 5 segundos
+                corazon.style.animation = `volar ${duracion}s linear forwards`;
+                
+                document.getElementById('contenedor-corazones').appendChild(corazon);
+
+                // Eliminar después de la animación
+                setTimeout(() => {
+                    corazon.remove();
+                }, duracion * 1000);
+            }
+        });
+    </script>
+</body>
+</html>
